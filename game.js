@@ -10,6 +10,7 @@ var text;
 var winningMessage;
 var won = false;
 var currentScore = 0;
+var lives = 3;
 var winningScore = 100;
 
 // add collectable items to the game
@@ -70,16 +71,26 @@ function itemHandler(player, item) {
         currentScore = currentScore + 10;
     }
     else if (item.key === 'poison') {
-        currentScore = currentScore -10;
+        currentScore = currentScore -25;
     }
     else if (item.key === 'star') {
-        currentScore = currentScore + 50;
+        currentScore = currentScore + 25;
     }
     if (currentScore === winningScore) {
         createBadge();
     }
 }
 
+// player lives
+
+function poisonCollect(player, poison) {
+    poison.kill();
+    lives = lives - 1;
+    if (lives === 0) {
+        player.kill();
+        gameOver = true;
+    }
+}
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
     badge.kill();
